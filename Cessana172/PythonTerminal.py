@@ -1,18 +1,13 @@
 import os
 import math
-import time
-
 manche = 0
 v_stall = 80
 v_max = 226
-
 velocidade = int(226*math.sqrt(manche/100))
 airspeed = velocidade/1.852
-
 altitude = 0
 mistura = 0
 peso = int(100*9.81)
-
 def qfp(speed, alt, nos, pes):
 	os.system("clear")
 	ns = round(speed/1.852)
@@ -20,7 +15,6 @@ def qfp(speed, alt, nos, pes):
 	string_t = f"   {speed}  Km/h              {alt}                    {ns} Km/h     {pes} N"
 	print(title)
 	print(string_t)
-	
 fest = input(" Desativar freio de estacionamento? [Y/N]:")
 stats_fest = True
 if fest == "Y":
