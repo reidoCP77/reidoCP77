@@ -1,5 +1,6 @@
 L = pV²SCL(a) >= mg
 
+V = raiz(2L/)
 p = p/RT
 
 L >= mg
