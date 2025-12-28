@@ -1,4 +1,5 @@
 --print("Hello, World!")
+--print("Hello, World!")
 --====================================
 --  Treinamento Físico UI - v1.2.1
 --  Script ÚNICO (Auto ScreenGui)
@@ -30,9 +31,9 @@ end
 
 local function tween(obj, t, p)
     TweenService:Create(
-        obj,
-        TweenInfo.new(t, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-        p
+    obj,
+    TweenInfo.new(t, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+    p
     ):Play()
 end
 
@@ -51,45 +52,45 @@ corner(main, 18)
 -- Drag MAIN (PC + MOBILE)
 --========================
 do
-    local dragging, dragInput, dragStart, startPos
+local dragging, dragInput, dragStart, startPos
 
-    local function update(input)
-        local delta = input.Position - dragStart
-        main.Position = UDim2.new(
-            startPos.X.Scale,
-            startPos.X.Offset + delta.X,
-            startPos.Y.Scale,
-            startPos.Y.Offset + delta.Y
-        )
+local function update(input)
+    local delta = input.Position - dragStart
+    main.Position = UDim2.new(
+    startPos.X.Scale,
+    startPos.X.Offset + delta.X,
+    startPos.Y.Scale,
+    startPos.Y.Offset + delta.Y
+    )
+end
+
+main.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = main.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
     end
+end)
 
-    main.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1
+main.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement
         or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = main.Position
+        dragInput = input
+    end
+end)
 
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    main.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement
-        or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    UIS.InputChanged:Connect(function(input)
-        if dragging and input == dragInput then
-            update(input)
-        end
-    end)
+UIS.InputChanged:Connect(function(input)
+    if dragging and input == dragInput then
+        update(input)
+    end
+end)
 end
 
 --========================
@@ -196,20 +197,22 @@ layout.Padding = UDim.new(0,10)
 --========================
 local function executarJJs()
     local Options = {
-        Keybind = 'Home',
-        Tempo = 0.7,
-        Rainbow = false,
-        Language = {
-            UI = 'pt-br',
-            Words = 'pt-br'
-        },
+    Keybind = 'Home',
+    Tempo = 0.7,
+    Rainbow = false,
+    Language = {
+    UI = 'pt-br',
+    Words = 'pt-br'
+    },
     }
-
+    
     loadstring(game:HttpGet(
-        'https://raw.githubusercontent.com/Zv-yz/AutoJJs/main/Main.lua'
+    'https://raw.githubusercontent.com/Zv-yz/AutoJJs/main/Main.lua'
     ))(Options)
 end
-
+local function ExecutarVolvers()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/volvers.lua"))()
+end
 --========================
 -- Etapas
 --========================
@@ -223,7 +226,7 @@ local function etapa(txt, callback)
     b.BackgroundColor3 = Color3.fromRGB(70,130,255)
     b.Parent = scroll
     corner(b,12)
-
+    
     b.MouseButton1Click:Connect(function()
         if callback then
             callback()
@@ -233,11 +236,11 @@ local function etapa(txt, callback)
     end)
 end
 
-etapa("Etapa Polichinelos")
-etapa("Etapa Volver's")
+etapa("Etapa JJ's", executarJJs)
+etapa("Etapa Volver's", executarVolvers)
 etapa("Etapa Parkour's")
 etapa("Etapa Gramatical")
-etapa("Etapa JJ's", executarJJs)
+
 
 layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     scroll.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
@@ -258,9 +261,9 @@ local function credit(txt, y)
     t.Parent = creditosFrame
 end
 
-credit("UI-Designer: GabrielBStar2", 20)
-credit("Manager-Developer: yurizando139", 60)
-
+credit("UI-Designer: GabrielBStar2", 0)
+credit("Manager-Developer: yurizando139", 20)
+credit("Manager: DoandiepRVaEy", 40)
 --========================
 -- Sistema Abas
 --========================
@@ -316,3 +319,6 @@ end)
 close.MouseButton1Click:Connect(function()
     GUI:Destroy()
 end)
+
+
+
