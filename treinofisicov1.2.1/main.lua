@@ -210,7 +210,7 @@ local function executarJJs()
     'https://raw.githubusercontent.com/Zv-yz/AutoJJs/main/Main.lua'
     ))(Options)
 end
-local function ExecutarVolvers()
+local function executarVolvers()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/volvers.lua"))()
 end
 --========================
