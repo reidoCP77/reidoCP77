@@ -129,17 +129,17 @@ end
 
 local function rotateCameraRight()
     local cf = Camera.CFrame
-    Camera.CFrame = cf * CFrame.Angles(0, math.rad(-45), 0)
+    Camera.CFrame = cf * CFrame.Angles(0, math.rad(-90), 0)
 end
 
 local function rotateCameraLeft()
     local cf = Camera.CFrame
-    Camera.CFrame = cf * CFrame.Angles(0, math.rad(45), 0)
+    Camera.CFrame = cf * CFrame.Angles(0, math.rad(90), 0)
 end
 
 local function rotateCameraDown()
     local cf = Camera.CFrame
-    Camera.CFrame = cf * CFrame.Angles(0, math.rad(90), 0)
+    Camera.CFrame = cf * CFrame.Angles(0, math.rad(180), 0)
 end
 
 TextChatService.OnIncomingMessage = function(message)
