@@ -110,7 +110,7 @@ scrollCorner.Parent = scrollFrame
 
 -- Lista de opções
 local options = {
-    "A importância dos CDP",
+    "A importância da CDP",
     "A importância dos Generais",
     "A importância dos Graduados",
     "A importância dos Praças",
@@ -122,7 +122,9 @@ local options = {
     "Batalhão da Polícia do Exército",
     "Centro de Inteligência do Exército",
     "Fauna Brasileira",
-    "O que você achou do treino"
+    "O que você achou do treino",
+    "Por que você deseja adentrar ao EB",
+    "Por que você deseja subir de patente"
 }
 
 local selectedOption = nil
@@ -160,19 +162,21 @@ end
 -- Função para gerar texto baseado na opção selecionada
 local function generateText(option)
     local texts = {
-        ["A importância dos CDP"] = "Os Centros de Distribuição de Produtos (CDP) desempenham um papel crucial na logística militar, garantindo que suprimentos essenciais cheguem às tropas de forma eficiente e oportuna. Sua organização e rapidez são fundamentais para o sucesso das operações.",
-        ["A importância dos Generais"] = "Os Generais são líderes estratégicos que comandam forças militares, tomando decisões críticas que influenciam o rumo das batalhas. Sua experiência e visão tática são essenciais para manter a disciplina e a eficácia das unidades subordinadas.",
-        ["A importância dos Graduados"] = "Os Graduados representam a base educada das forças armadas, trazendo conhecimento técnico e habilidades especializadas. Eles contribuem para a inovação e a adaptação às novas tecnologias no campo de batalha.",
-        ["A importância dos Praças"] = "As Praças formam a espinha dorsal das forças armadas, executando tarefas operacionais diárias com dedicação. Sua lealdade e resiliência são vitais para a manutenção da ordem e da segurança nacional.",
-        ["A importância dos Oficiais"] = "Os Oficiais atuam como intermediários entre o comando superior e as tropas, transmitindo ordens e motivando os subordinados. Sua liderança inspiradora é chave para o moral e a coesão das unidades.",
-        ["A importância dos recrutamentos"] = "Os recrutamentos são o processo fundamental para expandir e renovar as forças armadas, selecionando indivíduos aptos e motivados. Um recrutamento eficaz assegura a qualidade e a diversidade do pessoal militar.",
-        ["A importância dos treinamentos"] = "Os treinamentos militares preparam os soldados para enfrentar desafios reais, desenvolvendo habilidades físicas e mentais. Eles são essenciais para garantir a prontidão e a competência em situações de combate.",
-        ["Batalhão de Ações de Comandos"] = "O Batalhão de Ações de Comandos é uma unidade especializada em operações de alto risco, como resgates e incursões rápidas. Sua elite de guerreiros treinados é fundamental para missões estratégicas e de precisão.",
-        ["Batalhão de Forças Especiais"] = "O Batalhão de Forças Especiais opera em ambientes hostis, executando tarefas que exigem extrema habilidade e sigilo. Sua capacidade de adaptação e força letal fazem dele um ativo inestimável na defesa nacional.",
-        ["Batalhão da Polícia do Exército"] = "O Batalhão da Polícia do Exército mantém a ordem interna e a segurança nas bases militares, prevenindo crimes e assegurando a disciplina. Sua presença é crucial para a integridade das operações militares.",
-        ["Centro de Inteligência do Exército"] = "O Centro de Inteligência do Exército coleta e analisa informações vitais para decisões estratégicas. Sua expertise em espionagem e contrainteligência protege as forças contra ameaças invisíveis.",
-        ["Fauna Brasileira"] = "A fauna brasileira é rica e diversificada, abrigando milhares de espécies endêmicas. Preservar essa biodiversidade é essencial para o equilíbrio ecológico e o patrimônio natural do país.",
-        ["O que você achou do treino"] = "O treino foi intenso e desafiador, testando meus limites físicos e mentais. Aprendi valiosas lições sobre trabalho em equipe e perseverança, que aplicarei em futuras missões."
+        ["A importância da CDP"] = "A capacitação de patente é essencial para que Militares sejam promovidos indevidamente, por exemplo, fui promovido á recruta, após 5 minutos me torno Soldado, e assim em diante, a CDP serve para impedir isso.",
+        ["A importância dos Generais"] = "Os Generais do Exército Brasileiro desempenham um papel fundamental nas questões administrativas, eles têm como principal objetivo representar o Exército por meio de suas condutas, além de realizar treinamentos e exames.",
+        ["A importância dos Graduados"] = "Os Graduados são importantes para garantir que a quantidade de Militares do Exército, cresça cada vez mais, além de serem os denominados heróis para os Praças.",
+        ["A importância dos Praças"] = "Os Praças, mais conhecidos como iniciantes do Exército, são responsáveis por monitorar o quartel, treinar, e realizar atividades extras.",
+        ["A importância dos Oficiais"] = "Os Oficiais garantem a segurança dentro do quartel, eles mantém a total ordem por meio de suas algemas, e podem realizar treinamentos físicos.",
+        ["A importância dos recrutamentos"] = "Os recrutamentos são extremamente importantes no Exército Brasileiro, eles auxiliam a crescer cada vez mais, e mais a quantidade de Militares presentes no Exército.",
+        ["A importância dos treinamentos"] = "Os treinamentos são exclusivamente necessários para capacitar os Militares e promove-los por meio de seus esforços, eles ocorrem diariamente, e geralmente são realizado por Oficiais.",
+        ["Batalhão de Ações de Comandos"] = "O Batalhão de Ações de Comandos é uma unidade divisional do Exército Brasileiro que atua em operações de combate, na maioria das vezes, pela retaguarda de seus adversários, gerando assim, o grande medo.",
+        ["Batalhão de Forças Especiais"] = "O Batalhão de Forças Especiais é uma divisão extremamente capacitada, que atua exclusivamente em combate intensivo e com precisão.",
+        ["Batalhão da Polícia do Exército"] = "O Batalhão da Polícia do Exército é responsável por garantir a ordem, a disciplina e a segurança no Exército, eles atuam á todo momento, monitorando as ações realizadas no quartel, e se preciso, ás corrige.",
+        ["Centro de Inteligência do Exército"] = "O Centro de Inteligência do Exército é responsável pelo monitoramento intensivo no quartel, eles garantem a proteção de ataques e garantem a segurança no Exército Brasileiro.",
+        ["Fauna Brasileira"] = "A fauna brasileira é rica e diversificada, abrigando milhares de espécies diferenes. Preservar a Fauna é fundamental para o equilíbrio do Brasil.",
+        ["O que você achou do treino"] = "O treino de hoje foi totalmente perfeito, o instrutor foi rápido, aplicou o treino com precisão e exerceu sua função de forma correta.",
+        ["Por que você deseja adentrar ao EB"] = "Eu desejo adentrar ao Exército Brasileiro para agir de forma honesta e subir de patente até o máximo que minha mente permitir, espero que isso seja possível.",
+        ["Por que você deseja subir de patente"] = "Desejo ser promovido para poder desbloquear novos salários, ser mais respeitado, além de honrar mais ainda a pátria."      
     }
     return texts[option] or "Texto não disponível para este tema."
 end
