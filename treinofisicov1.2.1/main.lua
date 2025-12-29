@@ -47,10 +47,9 @@ main.AnchorPoint = Vector2.new(0.5, 0.5)
 main.BackgroundColor3 = Color3.fromRGB(28,28,28)
 main.Parent = GUI
 corner(main, 18)
-
---========================
--- Drag MAIN (PC + MOBILE)
---========================
+local function etapaParkour()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-cilentside-f3x-78823"))()
+end
 do
 local dragging, dragInput, dragStart, startPos
 
@@ -70,7 +69,7 @@ main.InputBegan:Connect(function(input)
         dragging = true
         dragStart = input.Position
         startPos = main.Position
-        
+
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
@@ -205,7 +204,7 @@ local function executarJJs()
     Words = 'pt-br'
     },
     }
-    
+
     loadstring(game:HttpGet(
     'https://raw.githubusercontent.com/Zv-yz/AutoJJs/main/Main.lua'
     ))(Options)
@@ -226,7 +225,7 @@ local function etapa(txt, callback)
     b.BackgroundColor3 = Color3.fromRGB(70,130,255)
     b.Parent = scroll
     corner(b,12)
-    
+
     b.MouseButton1Click:Connect(function()
         if callback then
             callback()
@@ -319,6 +318,4 @@ end)
 close.MouseButton1Click:Connect(function()
     GUI:Destroy()
 end)
-
-
 
