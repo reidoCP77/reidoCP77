@@ -241,7 +241,7 @@ end
 
 etapa("Etapa JJ's", executarJJs)
 etapa("Etapa Volver's", executarVolvers)
-etapa("Etapa Parkour's")
+etapa("Etapa Parkour's", btools)
 etapa("Etapa Gramatical")
 
 
