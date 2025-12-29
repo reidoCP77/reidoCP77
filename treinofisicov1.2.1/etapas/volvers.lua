@@ -149,15 +149,15 @@ TextChatService.OnIncomingMessage = function(message)
     local text = message.Text:upper()
     
     if text == "DIREI TA VOLVER!" or text == "DIREI TA VOLVER !" or text == "DIREITA VOLVER!" or text == "DIREITA VOLVER !" then
-        applyWithDelay(rotateCameraRight)
+        rotateCameraRight()
     end
     
     if text == "ESQUERDA VOLVER!" or text == "ES QUERDA VOLVER!" or text == "ES QUER DA VOLVER!" or text == "ESQUERDA VOLVER !" or text == "ES QUER DA VOLVER !" or text == "ES QUERDA VOLVER !" then
-        applyWithDelay(rotateCameraLeft)
+       rotateCameraLeft()
     end
     
     if text == "RETA GUARDA VOLVER!" or text == "RETA GUARDA VOLVER !" or text == "RETAGUARDA VOLVER!" or text == "RETAGUARDA VOLVER !" then
-        applyWithDelay(rotateCameraDown)
+       rotateCameraDown()    
     end
 end
 Frame.Draggable = true
