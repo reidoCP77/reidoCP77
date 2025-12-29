@@ -212,6 +212,10 @@ end
 local function executarVolvers()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/volvers.lua"))()
 end
+
+local function btools()
+     loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-cilentside-f3x-78823"))()
+end
 --========================
 -- Etapas
 --========================
