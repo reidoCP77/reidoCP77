@@ -29,7 +29,7 @@ Title.Size = UDim2.new(1, -40, 0, 30)
 Title.Position = UDim2.new(0, 10, 0, 5)
 Title.BackgroundTransparency = 1
 
-Title.Text = "VOLVER'S"
+Title.Text = "Etapa Volver's"
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 14
@@ -69,10 +69,10 @@ local Cooldown = false
 
 local function updateButton()
     if Enabled then
-        CheckBox.Text = "ON"
+        CheckBox.Text = "Ativado"
         CheckBox.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
     else
-        CheckBox.Text = "OFF"
+        CheckBox.Text = "Desativado"
         CheckBox.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
     end
 end
