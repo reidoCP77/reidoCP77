@@ -93,7 +93,9 @@ do
         end
     end)
 end
-
+local function etapaGramatical()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/texto.lua"))()
+end
 --========================
 -- Top Bar
 --========================
