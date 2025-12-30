@@ -241,6 +241,7 @@ etapa("Etapa JJ's", executarJJs)
 etapa("Etapa Volver's", executarVolvers)
 etapa("Etapa Parkour's", btools)
 etapa("Etapa Gramatical", etapaGramatical)
+etapa("Etapa Perguntas")
 
 layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     scroll.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
