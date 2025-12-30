@@ -94,7 +94,7 @@ do
     end)
 end
 local function etapaGramatical()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/texto.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/treinofisicov1.2.1/etapas/textos.lua"))()
 end
 --========================
 -- Top Bar
@@ -240,7 +240,7 @@ end
 etapa("Etapa JJ's", executarJJs)
 etapa("Etapa Volver's", executarVolvers)
 etapa("Etapa Parkour's", btools)
-etapa("Etapa Gramatical")
+etapa("Etapa Gramatical", etapaGramatical)
 
 layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     scroll.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
