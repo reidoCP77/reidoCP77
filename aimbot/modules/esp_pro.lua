@@ -2,6 +2,7 @@ local runserver = game:GetService("RunService")
 local camera = workspace.CurrentCamera
 local localplayer = game.Players.LocalPlayer
 
+_G.ESP_ENABLED = true
 local ESP = {}
 
 function newEsp(player)
@@ -26,6 +27,12 @@ for _, plr in pairs(Players:GetPlayers()) do
 end
 Players.PlayerAdded:Connect(newEsp)
 runserver.RenderStepped:Connect(function()
+    if not _G.ESP_ENABLED then
+        for _, text in pairs(ESP) do
+          text.Visible = false
+        end
+        return
+      end
     for plr, text in pairs(ESP) do
       if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
         local pos, onScreen = Camera:WorldToViewportPoint(
