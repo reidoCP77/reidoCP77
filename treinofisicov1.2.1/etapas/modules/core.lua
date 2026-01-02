@@ -13,4 +13,7 @@ uiCorner.CornerRadius = UDim.new(0,12)
 
 local frameName = Instance.new("TextLabel", Frame)
 frameName.Position = UDim2.new(0.4,0,0.9,0)
+frameName.Font = Enum.Font.GothamBold
+frameName.BackgroundTransparency = 1
+frameName.TextColor3 = Color3.fromRGB(230,230,230)
 frameName.Text = "CoreGui"
