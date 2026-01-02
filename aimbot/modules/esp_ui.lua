@@ -1,176 +1,124 @@
--- CONFIG COMPARTILHADA COM O ESP
-_G.CONFIG = _G.CONFIG or {
+-- esp_ui.lua
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+
+-- CONFIGURAÇÕES
+local options = {
     Enabled = true,
     NameESP = true,
-    BoxESP = true,
-    Color = Color3.fromRGB(255, 0, 0)
+    Color = Color3.fromRGB(255,0,0)
 }
 
--- SERVICES
-local TweenService = game:GetService("TweenService")
-local UIS = game:GetService("UserInputService")
+-- CARREGA ESP
+loadstring(game:HttpGet(
+    "https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/aimbot/modules/esp_pro.lua"
+))(options)
 
--- FUNÇÕES DE ESTILO
-local function round(obj, r)
-    local c = Instance.new("UICorner")
-    c.CornerRadius = UDim.new(0, r)
-    c.Parent = obj
-end
-
-local function stroke(obj, t, col, tr)
-    local s = Instance.new("UIStroke")
-    s.Thickness = t
-    s.Color = col
-    s.Transparency = tr or 0
-    s.Parent = obj
-end
-
-local function gradient(obj, colors)
-    local g = Instance.new("UIGradient")
-    g.Color = ColorSequence.new(colors)
-    g.Parent = obj
-end
-
-local function hover(btn)
-    local enter = TweenService:Create(btn, TweenInfo.new(0.15), {
-        BackgroundColor3 = Color3.fromRGB(65,65,65)
-    })
-    local leave = TweenService:Create(btn, TweenInfo.new(0.15), {
-        BackgroundColor3 = Color3.fromRGB(45,45,45)
-    })
-
-    btn.MouseEnter:Connect(function() enter:Play() end)
-    btn.MouseLeave:Connect(function() leave:Play() end)
-end
-
--- GUI BASE
+-- GUI
 local gui = Instance.new("ScreenGui")
-gui.Name = "ESP_PREMIUM_UI"
+gui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 gui.ResetOnSpawn = false
-gui.Parent = game.CoreGui
 
--- FRAME PRINCIPAL
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 240, 0, 0)
-frame.Position = UDim2.new(0, 20, 0, 140)
-frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
-frame.Active = true
+frame.Size = UDim2.new(0, 280, 0, 340)
+frame.Position = UDim2.new(0.5, -140, 0.5, -170)
+frame.BackgroundColor3 = Color3.fromRGB(25,25,25)
+frame.BorderSizePixel = 0
 
-round(frame, 14)
-stroke(frame, 1.2, Color3.fromRGB(90,90,90), 0.2)
-gradient(frame, {
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(28,28,28)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(15,15,15))
-})
-
--- ANIMAÇÃO DE ABRIR
-TweenService:Create(
-    frame,
-    TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
-    { Size = UDim2.new(0,240,0,300) }
-):Play()
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0,12)
+Instance.new("UIStroke", frame).Color = Color3.fromRGB(90,90,90)
 
 -- TÍTULO
 local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1,0,0,40)
+title.Size = UDim2.new(1, -60, 0, 40)
+title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "ESP PREMIUM"
+title.Text = "ESP PRO"
 title.Font = Enum.Font.GothamBold
-title.TextSize = 15
-title.TextColor3 = Color3.fromRGB(235,235,235)
+title.TextSize = 18
+title.TextColor3 = Color3.new(1,1,1)
+title.TextXAlignment = Left
 
--- BOTÃO FECHAR
-local close = Instance.new("TextButton", frame)
-close.Size = UDim2.new(0,30,0,30)
-close.Position = UDim2.new(1,-35,0,5)
-close.Text = "X"
-close.Font = Enum.Font.GothamBold
-close.TextSize = 14
-close.TextColor3 = Color3.new(1,1,1)
-close.BackgroundColor3 = Color3.fromRGB(180,60,60)
+-- BOTÕES TOPO
+local function TopButton(txt, pos)
+    local b = Instance.new("TextButton", frame)
+    b.Size = UDim2.new(0, 25, 0, 25)
+    b.Position = pos
+    b.Text = txt
+    b.Font = Enum.Font.GothamBold
+    b.TextSize = 14
+    b.TextColor3 = Color3.new(1,1,1)
+    b.BackgroundColor3 = Color3.fromRGB(40,40,40)
+    Instance.new("UICorner", b).CornerRadius = UDim.new(1,0)
+    return b
+end
 
-round(close, 8)
-stroke(close, 1, Color3.fromRGB(255,120,120), 0.2)
+local close = TopButton("X", UDim2.new(1,-30,0,8))
+local minimize = TopButton("-", UDim2.new(1,-60,0,8))
 
-close.MouseButton1Click:Connect(function()
-    gui:Destroy()
-end)
+-- SCROLLING
+local scroll = Instance.new("ScrollingFrame", frame)
+scroll.Position = UDim2.new(0,10,0,50)
+scroll.Size = UDim2.new(1,-20,1,-60)
+scroll.CanvasSize = UDim2.new(0,0,0,200)
+scroll.ScrollBarImageTransparency = 0.5
+scroll.BorderSizePixel = 0
+scroll.BackgroundTransparency = 1
 
--- BOTÃO MINIMIZAR
-local mini = Instance.new("TextButton", frame)
-mini.Size = UDim2.new(0,30,0,30)
-mini.Position = UDim2.new(1,-70,0,5)
-mini.Text = "-"
-mini.Font = Enum.Font.GothamBold
-mini.TextSize = 18
-mini.TextColor3 = Color3.new(1,1,1)
-mini.BackgroundColor3 = Color3.fromRGB(60,60,60)
+local layout = Instance.new("UIListLayout", scroll)
+layout.Padding = UDim.new(0,8)
 
-round(mini, 8)
-stroke(mini, 1, Color3.fromRGB(120,120,120), 0.3)
-
--- FUNÇÃO DE BOTÃO TOGGLE
-local function createToggle(text, y, callback)
-    local btn = Instance.new("TextButton", frame)
-    btn.Size = UDim2.new(1,-20,0,34)
-    btn.Position = UDim2.new(0,10,0,y)
+-- BOTÃO PADRÃO
+local function CreateToggle(text, callback)
+    local btn = Instance.new("TextButton", scroll)
+    btn.Size = UDim2.new(1,0,0,40)
+    btn.BackgroundColor3 = Color3.fromRGB(35,35,35)
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 14
     btn.Text = text
-    btn.BackgroundColor3 = Color3.fromRGB(45,45,45)
-    btn.TextColor3 = Color3.fromRGB(235,235,235)
-    btn.Font = Enum.Font.GothamSemibold
-    btn.TextSize = 13
-    btn.Parent = frame
-
-    round(btn, 10)
-    stroke(btn, 1, Color3.fromRGB(100,100,100), 0.4)
-    hover(btn)
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0,8)
 
     btn.MouseButton1Click:Connect(callback)
 end
 
--- TOGGLES
-createToggle("ESP ON / OFF", 55, function()
-    _G.CONFIG.Enabled = not _G.CONFIG.Enabled
+-- BOTÕES
+CreateToggle("ESP ON / OFF", function()
+    options.Enabled = not options.Enabled
 end)
 
-createToggle("Nome ESP", 95, function()
-    _G.CONFIG.NameESP = not _G.CONFIG.NameESP
+CreateToggle("NAME ESP", function()
+    options.NameESP = not options.NameESP
 end)
 
-createToggle("Box ESP", 135, function()
-    _G.CONFIG.BoxESP = not _G.CONFIG.BoxESP
+CreateToggle("COR: VERMELHO", function()
+    options.Color = Color3.fromRGB(255,0,0)
 end)
 
--- CORES
-local colors = {
-    {Name="Vermelho", Color=Color3.fromRGB(255,0,0)},
-    {Name="Verde", Color=Color3.fromRGB(0,255,0)},
-    {Name="Azul", Color=Color3.fromRGB(0,170,255)},
-    {Name="Branco", Color=Color3.fromRGB(255,255,255)}
-}
+CreateToggle("COR: AZUL", function()
+    options.Color = Color3.fromRGB(0,150,255)
+end)
 
-local y = 185
-for _, v in ipairs(colors) do
-    createToggle("Cor: "..v.Name, y, function()
-        _G.CONFIG.Color = v.Color
-    end)
-    y += 40
-end
+layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    scroll.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
+end)
 
 -- MINIMIZAR
 local minimized = false
-mini.MouseButton1Click:Connect(function()
+minimize.MouseButton1Click:Connect(function()
     minimized = not minimized
-    TweenService:Create(
-        frame,
-        TweenInfo.new(0.2),
-        { Size = minimized and UDim2.new(0,240,0,45) or UDim2.new(0,240,0,300) }
-    ):Play()
+    scroll.Visible = not minimized
+    frame.Size = minimized and UDim2.new(0,280,0,50) or UDim2.new(0,280,0,340)
 end)
 
--- ARRASTAR (PC + MOBILE)
-local dragging = false
-local dragStart, startPos
+-- FECHAR
+close.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
+
+-- DRAG
+local dragging, dragStart, startPos
 
 frame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1
@@ -178,13 +126,6 @@ frame.InputBegan:Connect(function(input)
         dragging = true
         dragStart = input.Position
         startPos = frame.Position
-    end
-end)
-
-frame.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1
-    or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = false
     end
 end)
 
@@ -199,4 +140,8 @@ UIS.InputChanged:Connect(function(input)
             startPos.Y.Offset + delta.Y
         )
     end
+end)
+
+UIS.InputEnded:Connect(function()
+    dragging = false
 end)
