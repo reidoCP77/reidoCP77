@@ -10,3 +10,7 @@ Frame.BackgroundColor3 = Color3.fromRGB(60,60,60)
 
 local uiCorner = Instance.new("UICorner", Frame)
 uiCorner.CornerRadius = UDim.new(0,12)
+
+local frameName = Instance.new("TextLabel", Frame)
+frameName.Position = UDim2.new(0.4,0,0.9,0)
+frameName.Text = "CoreGui"
