@@ -11,7 +11,11 @@ function newEsp(player)
   text.Center = true
   text.Outline = true
   text.Visible = false
+  
   ESP[player] = text
+  player.CharacterAdded:Connect(function()
+      -- anti-reset
+    end
 end
 
 local Players = game.Players
