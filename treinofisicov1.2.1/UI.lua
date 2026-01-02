@@ -3,4 +3,6 @@ local port = ui:mainport(3000)
 local stats = ui:stats(0)
 local data = ui:data()
 local server = ui:server(data, port)
-ui:RunServer(server)
+while stats == 0 then
+   ui:RunServer(server)
+end
