@@ -1,21 +1,6 @@
--- esp_ui.lua
-local Players = game:GetService("Players")
+local LocalPlayer = game.Players.LocalPlayer
 local UIS = game:GetService("UserInputService")
-local LocalPlayer = Players.LocalPlayer
 
--- CONFIGURAÇÕES
-local options = {
-    Enabled = true,
-    NameESP = true,
-    Color = Color3.fromRGB(255,0,0)
-}
-
--- CARREGA ESP
-loadstring(game:HttpGet(
-    "https://raw.githubusercontent.com/reidoCP77/reidoCP77/refs/heads/main/aimbot/modules/esp_pro.lua"
-))(options)
-
--- GUI
 local gui = Instance.new("ScreenGui")
 gui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 gui.ResetOnSpawn = false
@@ -34,11 +19,11 @@ local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1, -60, 0, 40)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "ESP PRO"
+title.Text = "Relíquia Script's v2"
 title.Font = Enum.Font.GothamBold
 title.TextSize = 18
 title.TextColor3 = Color3.new(1,1,1)
-title.TextXAlignment = Left
+title.TextXAlignment = Enum.TextXAlignment.Left
 
 -- BOTÕES TOPO
 local function TopButton(txt, pos)
@@ -83,21 +68,114 @@ local function CreateToggle(text, callback)
     btn.MouseButton1Click:Connect(callback)
 end
 
+-- OPÇÕES ESP
+local options = {
+    Enabled = false,
+    NameESP = false,
+    Color = Color3.fromRGB(255, 0, 0)  -- Cor padrão: vermelho
+}
+
+-- ESP IMPLEMENTAÇÃO
+local espHighlights = {}
+local espNames = {}
+
+local function CreateESP(player)
+    if player == LocalPlayer then return end
+    local character = player.Character
+    if not character then return end
+    
+    -- Highlight para ESP
+    local highlight = Instance.new("Highlight")
+    highlight.Adornee = character
+    highlight.FillColor = options.Color
+    highlight.OutlineColor = Color3.new(1,1,1)
+    highlight.FillTransparency = 0.5
+    highlight.OutlineTransparency = 0
+    highlight.Parent = character
+    espHighlights[player] = highlight
+    
+    -- Name ESP
+    if options.NameESP then
+        local billboard = Instance.new("BillboardGui")
+        billboard.Adornee = character:FindFirstChild("Head") or character:FindFirstChild("HumanoidRootPart")
+        billboard.Size = UDim2.new(0, 100, 0, 50)
+        billboard.StudsOffset = Vector3.new(0, 2, 0)
+        billboard.AlwaysOnTop = true
+        
+        local nameLabel = Instance.new("TextLabel", billboard)
+        nameLabel.Size = UDim2.new(1, 0, 1, 0)
+        nameLabel.BackgroundTransparency = 1
+        nameLabel.Text = player.Name
+        nameLabel.TextColor3 = options.Color
+        nameLabel.TextScaled = true
+        nameLabel.Font = Enum.Font.GothamBold
+        
+        billboard.Parent = character
+        espNames[player] = billboard
+    end
+end
+
+local function RemoveESP(player)
+    if espHighlights[player] then
+        espHighlights[player]:Destroy()
+        espHighlights[player] = nil
+    end
+    if espNames[player] then
+        espNames[player]:Destroy()
+        espNames[player] = nil
+    end
+end
+
+local function UpdateESP()
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if options.Enabled then
+            if not espHighlights[player] then
+                CreateESP(player)
+            else
+                espHighlights[player].FillColor = options.Color
+                if options.NameESP and not espNames[player] then
+                    -- Recriar name se necessário
+                    CreateESP(player)
+                elseif not options.NameESP and espNames[player] then
+                    espNames[player]:Destroy()
+                    espNames[player] = nil
+                end
+            end
+        else
+            RemoveESP(player)
+        end
+    end
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        if options.Enabled then
+            CreateESP(player)
+        end
+    end)
+end)
+
+game.Players.PlayerRemoving:Connect(RemoveESP)
+
 -- BOTÕES
 CreateToggle("ESP ON / OFF", function()
     options.Enabled = not options.Enabled
+    UpdateESP()
 end)
 
 CreateToggle("NAME ESP", function()
     options.NameESP = not options.NameESP
+    UpdateESP()
 end)
 
 CreateToggle("COR: VERMELHO", function()
     options.Color = Color3.fromRGB(255,0,0)
+    UpdateESP()
 end)
 
 CreateToggle("COR: AZUL", function()
     options.Color = Color3.fromRGB(0,150,255)
+    UpdateESP()
 end)
 
 layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
@@ -115,14 +193,17 @@ end)
 -- FECHAR
 close.MouseButton1Click:Connect(function()
     gui:Destroy()
+    -- Limpar ESP ao fechar
+    for _, player in pairs(game.Players:GetPlayers()) do
+        RemoveESP(player)
+    end
 end)
 
 -- DRAG
 local dragging, dragStart, startPos
 
 frame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1
-    or input.UserInputType == Enum.UserInputType.Touch then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
         dragStart = input.Position
         startPos = frame.Position
@@ -130,8 +211,7 @@ frame.InputBegan:Connect(function(input)
 end)
 
 UIS.InputChanged:Connect(function(input)
-    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement
-    or input.UserInputType == Enum.UserInputType.Touch) then
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
         local delta = input.Position - dragStart
         frame.Position = UDim2.new(
             startPos.X.Scale,
@@ -142,6 +222,8 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
-UIS.InputEnded:Connect(function()
-    dragging = false
+UIS.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
 end)
