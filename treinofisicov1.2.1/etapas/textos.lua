@@ -190,7 +190,7 @@ local function generateText(option)
         ["Batalhão de Ações de Comandos"] = "O Batalhão de Ações de Comandos é uma unidade divisional do Exército Brasileiro que atua em operações de combate, na maioria das vezes, pela retaguarda de seus adversários, gerando assim, o grande medo.",
         ["Batalhão de Forças Especiais"] = "O Batalhão de Forças Especiais é uma divisão extremamente capacitada, que atua exclusivamente em combate intensivo e com precisão.",
         ["Batalhão da Polícia do Exército"] = "O Batalhão da Polícia do Exército é responsável por garantir a ordem, a disciplina e a segurança no Exército, eles atuam á todo momento, monitorando as ações realizadas no quartel, e se preciso, ás corrige.",
-        ["Brasil"] = "O Brasil é um país localizado na América do Sul com uma cultura diversificada e uma grande fauna, além de estar na lista dos maiores países do mundo."
+        ["Brasil"] = "O Brasil é um país localizado na América do Sul com uma cultura diversificada e uma grande fauna, além de estar na lista dos maiores países do mundo.",
         ["Centro de Inteligência do Exército"] = "O Centro de Inteligência do Exército é responsável pelo monitoramento intensivo no quartel, eles garantem a proteção de ataques e garantem a segurança no Exército Brasileiro.",
         ["Fauna Brasileira"] = "A fauna brasileira é rica e diversificada, abrigando milhares de espécies diferenes. Preservar a Fauna é fundamental para o equilíbrio do Brasil.",
         ["O que você achou do treino"] = "O treino de hoje foi totalmente perfeito, o instrutor foi rápido, aplicou o treino com precisão e exerceu sua função de forma correta.",
